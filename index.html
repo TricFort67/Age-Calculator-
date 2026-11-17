@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор возраста</title>
+    <style>
+        body { font-family: sans-serif; background: #222; color: #fff; padding: 20px; text-align: center; }
+        input { padding: 10px; margin: 5px; border-radius: 5px; border: none; width: 80%; max-width: 300px; }
+        button { padding: 10px 20px; margin: 10px; border-radius: 5px; border: none; background: #4CAF50; color: white; font-size: 16px; cursor: pointer; }
+        #result { font-size: 20px; margin-top: 20px; color: #00FF00; }
+    </style>
+</head>
+<body>
+    <h2>Твой возраст</h2>
+    <input type="number" id="year" placeholder="Год рождения (напр. 2000)"><br>
+    <input type="number" id="month" placeholder="Месяц (1-12)"><br>
+    <input type="number" id="day" placeholder="День (1-31)"><br>
+    <button onclick="calculate()">Посчитать</button>
+    <div id="result"></div>
+
+    <script>
+        function calculate() {
+            let year = parseInt(document.getElementById('year').value);
+            let month = parseInt(document.getElementById('month').value);
+            let day = parseInt(document.getElementById('day').value);
+            
+            // Проверка на дурака
+            if (isNaN(year) || isNaN(month) || isNaN(day)) {
+                document.getElementById('result').innerHTML = "Ошибка: введи числа!";
+                return;
+            }
+
+            let today = new Date();
+            let todayYear = today.getFullYear();
+            let todayMonth = today.getMonth() + 1; // Месяцы начинаются с 0
+            let todayDay = today.getDate();
+
+            let y = todayYear - year;
+            let m = todayMonth - month;
+            let d = todayDay - day;
+
+            if (d < 0) { m -= 1; d += 30; }
+            if (m < 0) { y -= 1; m += 12; }
+
+            document.getElementById('result').innerHTML = `Тебе ${y} лет, ${m} месяцев, ${d} дней`;
+        }
+    </script>
+</body>
+</html>
